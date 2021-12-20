@@ -1,0 +1,57 @@
+<%- include ('header') %>
+
+    <!-- Progress Table start -->
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Apps Table
+                    <a class="btn btn-rounded btn-xs btn-success ml-3" href="/apps/add"><i class="fa fa-plus"></i></a>
+                </h4>
+                <div class="single-table">
+                    <div class="table-responsive">
+                        <table class="table table-hover progress-table text-center">
+                            <thead class="text-uppercase">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Category</th>
+                                    <th scope="col">Logo</th>
+                                    <th scope="col">action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <% if (result.length > 0) { %>
+                                <% for (var i = 0; i < result.length; i++) { %>
+                                <tr>
+                                    <th scope="row"><%= i+1; %></th>
+                                    <td><%= result[i]['app_id']; %></td>
+                                    <td><a href="/apps/app?app_id=<%= result[i]['app_id'] %>"><%= result[i]['app_name']; %></a></td>
+                                    <td><%= result[i]['app_category']; %></td>
+                                    <td><img src="<%= result[i]['icon_image']; %>" width="35px" height="35px"></td>
+                                    <td>
+                                        <ul class="d-flex justify-content-center">
+                                            <!-- <li class="mr-3"><a href="/apps/edit?id=<%= result[i]['app_id']; %>" class="text-secondary"><i class="fa fa-edit"></i></a></li> -->
+                                            <% id = result[i]['app_id']; %>
+                                            <% if ((result[i]['type_count'] > 0) || (result[i]['usage_count'] > 0) || (result[i]['removal_count'] > 0) || (result[i]['officer_count'] > 0)) { %>
+                                                <li><a class="text-secondary" style="pointer-events: none;"><i class="ti-trash"></i></a></li>
+                                            <% } else { %>
+                                                <li><a onclick="return confirmDelete('/apps/delete?id=<%= id %>');" class="text-danger"><i class="ti-trash"></i></a></li>
+                                            <% } %>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <% } %>
+                            <% } else { %>
+                                <tr style="text-align: center; padding: 100px;"><td colspan="6">No results found.</td></tr>
+                            <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Progress Table end -->
+
+<%- include ('footer') %>

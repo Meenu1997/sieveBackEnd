@@ -1,0 +1,58 @@
+<%- include ('header') %>
+
+    <!-- Progress Table start -->
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Admins Table</h4>
+                <div class="single-table">
+                    <div class="table-responsive">
+                        <table class="table table-hover progress-table text-center">
+                            <thead class="text-uppercase">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Admin id</th>
+                                    <th scope="col">email</th>
+                                    <!-- <th scope="col">status</th> -->
+                                    <th scope="col">action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <% if (result.length > 0) { %>
+                                <% for (var i = 0; i < result.length; i++) { %>
+                                <tr>
+                                    <th scope="row"><%= i+1; %></th>
+                                    <td><%= result[i]['admin_id']; %></td>
+                                    <td><%= result[i]['email']; %></td>
+                                    <!-- <td><span class="status-p bg-success">Active</span></td> -->
+                                    <td>
+                                        <ul class="d-flex justify-content-center">                                           
+                                            <!-- <li class="mr-3"><a href="/" class="text-secondary"><i class="fa fa-edit"></i></a></li> -->
+                                            <% id=result[i]['admin_id'];%>
+                                            <% if (result[i]['admin_id'] != admin.id) { %>
+                                                <% if (result[i]['permitted'] == "no") { %>
+                                                    <li><a onclick="return confirmUpdate('/admins/update?id=<%= id %>', 'Do you want to approve this as Admin ?');" class="text-secondary"><i class="fa fa-ban" style="font-size: 20px; color: red; cursor: pointer;"></i></a></li>
+                                                <% } else { %>
+                                                    <li><a onclick="return confirmUpdate('/admins/update_no?id=<%= id %>', 'Do you want to block this Admin ?');" class="text-secondary" ><i class="fa fa-check-circle" style="font-size: 20px; color: green; cursor: pointer;"></i></a></li>
+                                                <% } %>
+                                            <% } else { %>
+                                                <span>-</span>
+                                                <!-- <i class="fa fa-minus" style="font-size: 20px; color: grey;"></i> -->
+                                            <% } %>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <% } %>
+                            <% } else { %>
+                                <tr style="text-align: center; padding: 100px;"><td colspan="4">No results found.</td></tr>
+                            <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Progress Table end -->
+
+<%- include ('footer') %>
